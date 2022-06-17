@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "mysql": "^2.18.1",
+    "node-fetch": "^3.0.0",
+    "ws": "^8.2.2"
+  }
+}

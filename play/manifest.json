@@ -1,0 +1,9 @@
+{
+  "short_name": "Idle Pipe",
+  "name": "Idle Pipe",
+  "icons": [
+
+  ],
+  "start_url": ".",
+  "display": "standalone"
+}

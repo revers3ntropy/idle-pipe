@@ -1,0 +1,73 @@
+<div  style='animation: fromBottom 250ms'>
+    <h2 style='animation: longFromTop 250ms'>
+            Leaderboard
+    </h2>
+
+    <a class="link" id="sort by" style="animation: fromBottom 360ms, fadeIn 350ms"></a>
+
+    <div id="leaderboard"></div>
+</div>
+
+<script>
+    function receiveResults(data) {
+        document.getElementById("leaderboard").innerHTML = '';
+
+		if (data.length < 1){
+			document.getElementById('leaderboard').innerHTML = `
+                <p>
+                    No-one seems to have got any scores on this yet! <br>
+                    <a class="link" href="https://revers3ntropy.com/games/idle-pipe/play/">
+                        Be the first!
+                    </a>
+                </p>
+            `;
+			return;
+		}
+
+        let currentRank = 0;
+
+		let i = 0;
+        for (let user of data) {
+			i++;
+            if (user.adminLVL > 2) continue;
+
+            currentRank++;
+
+            const element = document.createElement("div");
+            element.classList.add("light-container");
+
+            element.style.fontFamily = 'Nunito';
+            element.style.paddingBottom = '30px';
+            element.style.textAlign = 'left';
+            element.style.animation = `${i % 2 === 0 ? 'longFromRight' : 'longFromLeft'} 0.5s`;
+			element.style.marginRight = '30px';
+
+            element.innerHTML = `
+                <div id="rank ${currentRank}" style="width: 30px; float: left; animation: shortFromTop 250ms">
+                    ${currentRank}
+                </div>
+
+                <div id="username ${currentRank}" style="width: 40%; float: left; animation: shortFromBottom 200ms">
+                    ${user.Username}
+                </div>
+
+                <div id="points ${currentRank}" style="max-width: 30%; min-width: 50px; float: right; animation: shortFromTop 250ms">
+                    ${user.score} (${parseFloat(user.score).toExponential(2)})
+                </div>
+            `;
+
+            document.getElementById("leaderboard").appendChild(element);
+
+            if (currentRank === 1){
+                document.getElementById('rank '+currentRank).style.color = 'rgb(255, 233, 0)' // 1st place
+            } else if (currentRank === 2){
+                document.getElementById('rank '+currentRank).style.color = 'rgb(196, 202, 206)' // 2nd place
+            } else if (currentRank === 3){
+                document.getElementById('rank '+currentRank).style.color = 'rgb(169, 113, 66)' // 3rd place
+            }
+        }
+        window.scrollTo(0, 0);
+    }
+
+    PHP("games/idle-pipe/backend/leaderboard.php", receiveResults);
+</script>
