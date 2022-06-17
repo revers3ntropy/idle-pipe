@@ -1,0 +1,7 @@
+play/static
+.env
+*.pem
+node_modules
+package-lock.json
+README.md
+.idea
